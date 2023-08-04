@@ -27,7 +27,6 @@ const AuthenticatedHeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow: auto;
 `
 
 const IconContainer = styled.div`
