@@ -1,36 +1,29 @@
 import { Trans } from '@lingui/macro'
-import { useWeb3React } from '@web3-react/core'
 import Column from 'components/Column'
-import UniswapXBrandMark from 'components/Logo/UniswapXBrandMark'
 import { RowBetween, RowFixed } from 'components/Row'
 import Toggle from 'components/Toggle'
-import { isUniswapXSupportedChain } from 'constants/chains'
-import { useUniswapXEnabled } from 'featureFlags/flags/uniswapx'
-import { useAppDispatch } from 'state/hooks'
 import { RouterPreference } from 'state/routing/types'
 import { useRouterPreference } from 'state/user/hooks'
-import { updateDisabledUniswapX } from 'state/user/reducer'
-import styled from 'styled-components/macro'
-import { Divider, ExternalLink, ThemedText } from 'theme'
+import { ThemedText } from 'theme'
 
-const InlineLink = styled(ThemedText.Caption)`
-  color: ${({ theme }) => theme.accentAction};
-  display: inline;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.8;
-  }
-`
+// const InlineLink = styled(ThemedText.Caption)`
+//   color: ${({ theme }) => theme.accentAction};
+//   display: inline;
+//   cursor: pointer;
+//   &:hover {
+//     opacity: 0.8;
+//   }
+// `
 
 export default function RouterPreferenceSettings() {
-  const { chainId } = useWeb3React()
+  // const { chainId } = useWeb3React()
   const [routerPreference, setRouterPreference] = useRouterPreference()
-  const uniswapXEnabled = useUniswapXEnabled() && chainId && isUniswapXSupportedChain(chainId)
-  const dispatch = useAppDispatch()
+  // const uniswapXEnabled = useUniswapXEnabled() && chainId && isUniswapXSupportedChain(chainId)
+  // const dispatch = useAppDispatch()
 
   return (
     <>
-      {uniswapXEnabled && (
+      {/* {uniswapXEnabled && (
         <>
           <RowBetween gap="sm">
             <RowFixed>
@@ -60,7 +53,7 @@ export default function RouterPreferenceSettings() {
           </RowBetween>
           <Divider />
         </>
-      )}
+      )} */}
       <RowBetween gap="sm">
         <RowFixed>
           <Column gap="xs">

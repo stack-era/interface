@@ -31,6 +31,13 @@ const USDC_OPTIMISM_GOERLI = new Token(
   'USDC',
   'USD//C'
 )
+export const USDC_BASE = new Token(
+  ChainId.BASE,
+  '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
+  6,
+  'axlUSDC',
+  'Axelar Wrapped USDC'
+)
 export const BRIDGED_USDC_ARBITRUM = new Token(
   ChainId.ARBITRUM_ONE,
   '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
@@ -85,6 +92,13 @@ export const DAI_ARBITRUM_ONE = new Token(
 export const DAI_OPTIMISM = new Token(
   ChainId.OPTIMISM,
   '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1',
+  18,
+  'DAI',
+  'Dai stable coin'
+)
+export const DAI_BASE = new Token(
+  ChainId.BASE,
+  '0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb',
   18,
   'DAI',
   'Dai stable coin'
@@ -355,6 +369,7 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WAVAX',
     'Wrapped AVAX'
   ),
+  [ChainId.BASE]: new Token(ChainId.BASE, '0x4200000000000000000000000000000000000006', 18, 'WETH', 'Wrapped Ether'),
 }
 
 export function isCelo(chainId: number): chainId is ChainId.CELO | ChainId.CELO_ALFAJORES {
@@ -477,7 +492,9 @@ export function getSwapCurrencyId(currency: Currency): string {
   return NATIVE_CHAIN_ID
 }
 
-export const TOKEN_SHORTHANDS: { [shorthand: string]: { [chainId in ChainId]?: string } } = {
+export const TOKEN_SHORTHANDS: {
+  [shorthand: string]: { [chainId in ChainId]?: string }
+} = {
   USDC: {
     [ChainId.MAINNET]: USDC_MAINNET.address,
     [ChainId.ARBITRUM_ONE]: BRIDGED_USDC_ARBITRUM.address,
@@ -492,5 +509,6 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: { [chainId in ChainId]?: s
     [ChainId.GOERLI]: USDC_GOERLI.address,
     [ChainId.SEPOLIA]: USDC_SEPOLIA.address,
     [ChainId.AVALANCHE]: USDC_AVALANCHE.address,
+    [ChainId.BASE]: USDC_BASE.address,
   },
 }

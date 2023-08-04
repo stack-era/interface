@@ -5,6 +5,7 @@ import polygonCircleLogoUrl from 'assets/images/polygonCircle.png'
 import { default as arbitrumCircleLogoUrl, default as arbitrumLogoUrl } from 'assets/svg/arbitrum_logo.svg'
 import avaxLogo from 'assets/svg/avax_logo.svg'
 import avaxSquareLogo from 'assets/svg/avax_square_logo.svg'
+import baseLogo from 'assets/svg/base.svg'
 import bnbSquareLogoUrl from 'assets/svg/bnb_square_logo.svg'
 import bnbLogo from 'assets/svg/bnb-logo.svg'
 import celoLogo from 'assets/svg/celo_logo.svg'
@@ -126,6 +127,24 @@ const CHAIN_INFO: ChainInfoMap = {
     helpCenterUrl: 'https://help.uniswap.org/en/collections/3137778-uniswap-on-optimistic-ethereum-oξ',
     nativeCurrency: { name: 'Optimism Goerli Ether', symbol: 'görOpETH', decimals: 18 },
     color: darkTheme.chain_420,
+  },
+  [ChainId.BASE]: {
+    networkType: NetworkType.L2,
+    blockWaitMsBeforeWarning: ms`25m`,
+    bridge: 'https://bridge.base.org/',
+    defaultListUrl: OPTIMISM_LIST,
+    docs: 'https://docs.base.org/',
+    explorer: 'https://basescan.org/',
+    infoLink: '',
+    label: 'Base',
+    logoUrl: baseLogo,
+    // Optimism perfers same icon for both
+    circleLogoUrl: baseLogo,
+    squareLogoUrl: baseLogo,
+    helpCenterUrl: 'https://help.uniswap.org/en/collections/3137778-uniswap-on-optimistic-ethereum-oξ',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    color: darkTheme.chain_8453_background,
+    backgroundColor: darkTheme.chain_8453_background,
   },
   [ChainId.ARBITRUM_ONE]: {
     networkType: NetworkType.L2,

@@ -42,6 +42,8 @@ export function useSwitchChain() {
             await connector.activate(chainId)
           } else {
             const info = getChainInfo(chainId)
+
+            console.log('====', info)
             const addChainParameter = {
               chainId,
               chainName: info.label,

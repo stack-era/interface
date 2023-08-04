@@ -1,7 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { BrowserEvent, InterfaceElementName, InterfaceEventName } from '@uniswap/analytics-events'
 import { useWeb3React } from '@web3-react/core'
-import { sendAnalyticsEvent, TraceEvent } from 'analytics'
 import PortfolioDrawer, { useAccountDrawer } from 'components/AccountDrawer'
 import PrefetchBalancesWrapper from 'components/AccountDrawer/PrefetchBalancesWrapper'
 import Loader from 'components/Icons/LoadingSpinner'
@@ -49,6 +47,7 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
 const Web3StatusConnectWrapper = styled.div`
   ${flexRowNoWrap};
   align-items: center;
+  width: fit-content;
   background-color: ${({ theme }) => theme.accentActionSoft};
   border-radius: ${FULL_BORDER_RADIUS}px;
   border: none;
@@ -72,6 +71,7 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{
   pending?: boolean
   isClaimAvailable?: boolean
 }>`
+  width: fit-content;
   background-color: ${({ pending, theme }) => (pending ? theme.accentAction : theme.deprecated_bg1)};
   border: 1px solid ${({ pending, theme }) => (pending ? theme.accentAction : theme.deprecated_bg1)};
   color: ${({ pending, theme }) => (pending ? theme.white : theme.textPrimary)};
@@ -142,7 +142,6 @@ function Web3StatusInner() {
 
   const [, toggleAccountDrawer] = useAccountDrawer()
   const handleWalletDropdownClick = useCallback(() => {
-    sendAnalyticsEvent(InterfaceEventName.ACCOUNT_DROPDOWN_BUTTON_CLICKED)
     toggleAccountDrawer()
   }, [toggleAccountDrawer])
   const isClaimAvailable = useIsNftClaimAvailable((state) => state.isClaimAvailable)
@@ -162,59 +161,48 @@ function Web3StatusInner() {
 
   if (account) {
     return (
-      <TraceEvent
-        events={[BrowserEvent.onClick]}
-        name={InterfaceEventName.MINI_PORTFOLIO_TOGGLED}
-        properties={{ type: 'open' }}
+      <Web3StatusConnected
+        disabled={Boolean(switchingChain)}
+        data-testid="web3-status-connected"
+        onClick={handleWalletDropdownClick}
+        pending={hasPendingActivity}
+        isClaimAvailable={isClaimAvailable}
       >
-        <Web3StatusConnected
-          disabled={Boolean(switchingChain)}
-          data-testid="web3-status-connected"
-          onClick={handleWalletDropdownClick}
-          pending={hasPendingActivity}
-          isClaimAvailable={isClaimAvailable}
-        >
-          {!hasPendingActivity && (
-            <StatusIcon account={account} size={24} connection={connection} showMiniIcons={false} />
-          )}
-          {hasPendingActivity ? (
-            <RowBetween>
-              <Text>
-                <Trans>{pendingTxs.length + pendingOrders.length} Pending</Trans>
-              </Text>{' '}
-              <Loader stroke="white" />
-            </RowBetween>
-          ) : (
-            <AddressAndChevronContainer>
-              <Text>{ENSName || shortenAddress(account)}</Text>
-            </AddressAndChevronContainer>
-          )}
-        </Web3StatusConnected>
-      </TraceEvent>
+        {!hasPendingActivity && (
+          <StatusIcon account={account} size={24} connection={connection} showMiniIcons={false} />
+        )}
+        {hasPendingActivity ? (
+          <RowBetween>
+            <Text>
+              <Trans>{pendingTxs.length + pendingOrders.length} Pending</Trans>
+            </Text>{' '}
+            <Loader stroke="white" />
+          </RowBetween>
+        ) : (
+          <AddressAndChevronContainer>
+            <Text>{ENSName || shortenAddress(account)}</Text>
+          </AddressAndChevronContainer>
+        )}
+      </Web3StatusConnected>
     )
   } else {
     return (
-      <TraceEvent
-        events={[BrowserEvent.onClick]}
-        name={InterfaceEventName.CONNECT_WALLET_BUTTON_CLICKED}
-        element={InterfaceElementName.CONNECT_WALLET_BUTTON}
+      <Web3StatusConnectWrapper
+        tabIndex={0}
+        onKeyPress={(e) => e.key === 'Enter' && handleWalletDropdownClick()}
+        onClick={handleWalletDropdownClick}
       >
-        <Web3StatusConnectWrapper
-          tabIndex={0}
-          onKeyPress={(e) => e.key === 'Enter' && handleWalletDropdownClick()}
-          onClick={handleWalletDropdownClick}
-        >
-          <StyledConnectButton tabIndex={-1} data-testid="navbar-connect-wallet">
-            <Trans>Connect</Trans>
-          </StyledConnectButton>
-        </Web3StatusConnectWrapper>
-      </TraceEvent>
+        <StyledConnectButton tabIndex={-1} data-testid="navbar-connect-wallet">
+          <Trans>Connect</Trans>
+        </StyledConnectButton>
+      </Web3StatusConnectWrapper>
     )
   }
 }
 
 export default function Web3Status() {
   const [isDrawerOpen] = useAccountDrawer()
+
   return (
     <PrefetchBalancesWrapper shouldFetchOnAccountUpdate={isDrawerOpen}>
       <Web3StatusInner />

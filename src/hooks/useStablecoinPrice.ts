@@ -8,6 +8,7 @@ import { useRoutingAPITrade } from 'state/routing/useRoutingAPITrade'
 import {
   BRIDGED_USDC_ARBITRUM,
   CUSD_CELO,
+  DAI_BASE,
   DAI_OPTIMISM,
   USDC_AVALANCHE,
   USDC_MAINNET,
@@ -25,6 +26,7 @@ const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> } = {
   [ChainId.CELO]: CurrencyAmount.fromRawAmount(CUSD_CELO, 10_000e18),
   [ChainId.BNB]: CurrencyAmount.fromRawAmount(USDT_BSC, 100e18),
   [ChainId.AVALANCHE]: CurrencyAmount.fromRawAmount(USDC_AVALANCHE, 10_000e6),
+  [ChainId.BASE]: CurrencyAmount.fromRawAmount(DAI_BASE, 10_000e18),
 }
 
 /**
